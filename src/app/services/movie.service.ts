@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 
 
 /* url of "The Movie Database" api credentials extracted from Environment*/
-const apiUrl = environment.apiUrl;
+const apiUrl = `${environment.apiUrl}/movie`;
+const apiUrlSearch = `${environment.apiUrl}/search/movie`;
 const apiKey = environment.apiKey;
 
 @Injectable({
@@ -33,7 +34,6 @@ export class MovieService {
    * @param {number} currentPage - The `currentPage`represents the page number of the results you want to retrieve. 
   * @returns Return an Observable of type IMovie.
    */
-
   getAllMoviesByType(type: string, currentPage: number): Observable<IMovie> {
     return this._http.get<IMovie>(`${apiUrl}/${type}?api_key=${apiKey}&language=es-MX&page=${currentPage}`);
   }
@@ -46,6 +46,16 @@ export class MovieService {
    */
   getMovieById(movieId: number): Observable<IMovieDetails> {
     return this._http.get<IMovieDetails>(`${apiUrl}/${movieId}?api_key=${apiKey}&language=es-MX`);
+  }
+
+/**
+   * getAllMoviesByQuery retrieves all movies by querying through an API call.
+   * @param {string} query - The `query` is a string representing the query parameter of the movie you want to retrieve. 
+   * @param {number} currentPage - The `currentPage`represents the page number of the results you want to retrieve. 
+  * @returns Return an Observable of type IMovie.
+   */
+  getAllMoviesByQuery(query: string, currentPage: number): Observable<IMovie> {
+    return this._http.get<IMovie>(`${apiUrlSearch}?query=${query}&api_key=${apiKey}&language=es-MX&page=${currentPage}`);
   }
 
 }
