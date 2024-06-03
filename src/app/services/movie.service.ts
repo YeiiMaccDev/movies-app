@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { IMovie } from '../interfaces/movie';
+import { IMovie, IMovieDetails } from '../interfaces/movie';
 import { Observable } from 'rxjs';
 
 
@@ -34,6 +34,16 @@ export class MovieService {
    */
   getAllMoviesByType(type: string): Observable<IMovie> {
     return this._http.get<IMovie>(`${apiUrl}/${type}?api_key=${apiKey}`);
+  }
+
+
+  /**
+   * getMovieById searches for a movie by Id via an API call.
+   * @param {string} movieId - The `movieId` parameter is a number representing the id of the movie you want to retrieve. 
+   * @returns Return an Observable of type IMovieDetails.
+   */
+  getMovieById(movieId: number): Observable<IMovieDetails> {
+    return this._http.get<IMovieDetails>(`${apiUrl}/${movieId}?api_key=${apiKey}`);
   }
 
 }
