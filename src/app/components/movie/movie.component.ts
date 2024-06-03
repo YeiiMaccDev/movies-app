@@ -4,6 +4,7 @@ import { IMovie } from '../../interfaces/movie';
 import { environment } from '../../../environments/environment.development';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { ActivatedRoute } from '@angular/router';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 
 const imgUrl = environment.imgUrl;
@@ -11,7 +12,7 @@ const imgUrl = environment.imgUrl;
 @Component({
   selector: 'app-movie',
   standalone: true,
-  imports: [MovieCardComponent],
+  imports: [MovieCardComponent, PaginationComponent],
   templateUrl: './movie.component.html',
   styleUrl: './movie.component.css'
 })
@@ -26,22 +27,44 @@ export class MovieComponent implements OnInit {
   movieType: string = 'popular';
   movies: IMovie[] = [];
 
+  currentPage: number = 1;
+
   ngOnInit(): void {
     this._route.params.subscribe(params => {
       this.movieType = params['movieType'] || 'popular';
+      this.currentPage = 1;
       console.log(this.movieType);
       this.loadAllMovies();
     });
   }
 
   loadAllMovies() {
-    this._movieService.getAllMoviesByType(this.movieType).subscribe({
+    this._movieService.getAllMoviesByType(this.movieType, this.currentPage).subscribe({
       next: (resp: any) => {
         this.movies = resp.results as IMovie[];
         console.log(resp.results);
       },
       error: (error) => console.log('Error feching movies: ' + error)
     });
+  }
+
+
+  incrementPage(): void {
+    this.currentPage++;
+    this.loadAllMovies();
+    this.scrollToTop();
+  }
+
+  decrementPage(): void {
+    if (this.currentPage > 2) {
+      this.currentPage--;
+      this.loadAllMovies();
+      this.scrollToTop();
+    }
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
 }
