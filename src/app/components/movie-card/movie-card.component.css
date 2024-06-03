@@ -1,0 +1,9 @@
+.light-hover {
+    transition: all .2s ease-in-out;
+}
+
+.light-hover:hover {
+    /* transform: scale(1.01); */
+    border-color: #17a2b8;
+    transition: all .5s ease-in-out;
+}
