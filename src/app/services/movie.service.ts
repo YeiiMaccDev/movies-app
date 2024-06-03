@@ -26,4 +26,14 @@ export class MovieService {
     return this._http.get<IMovie>(`${apiUrl}/popular?api_key=${apiKey}`);
   }
 
+  
+  /**
+   * getAllMoviesByType retrieves all movies of a specified type using an API call.
+   * @param {string} type - The `type` parameter is a string that represents the type of movies you want to retrieve. 
+   * @returns Return an Observable of type IMovie.
+   */
+  getAllMoviesByType(type: string): Observable<IMovie> {
+    return this._http.get<IMovie>(`${apiUrl}/${type}?api_key=${apiKey}`);
+  }
+
 }

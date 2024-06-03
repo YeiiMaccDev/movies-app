@@ -35,7 +35,7 @@ export class MovieComponent implements OnInit {
   }
 
   loadAllMovies() {
-    this._movieService.getAllPopularMovies().subscribe({
+    this._movieService.getAllMoviesByType(this.movieType).subscribe({
       next: (resp: any) => {
         this.movies = resp.results as IMovie[];
         console.log(resp.results);
