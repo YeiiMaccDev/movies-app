@@ -7,7 +7,7 @@
         <h5 class="card-title">{{movieInfo.title}}</h5>
         <p class="card-text">{{movieInfo.original_title}}</p>
         <p class="card-text">{{movieInfo.release_date}}</p>
-        <a href="#" class="btn btn-sm btn-outline-info stretched-link">Ver detalles</a>
+        <a [routerLink]="['/movie', movieInfo.id]" class="btn btn-sm btn-outline-info stretched-link">Ver detalles</a>
     </div>
     <span class="position-absolute p-2 top-0 start-100 translate-middle badge rounded-pill bg-success">
         {{(movieInfo.vote_average * 10).toFixed(1) }} %

@@ -3,6 +3,7 @@ import { MovieService } from '../../services/movie.service';
 import { IMovie } from '../../interfaces/movie';
 import { environment } from '../../../environments/environment.development';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { ActivatedRoute } from '@angular/router';
 
 
 const imgUrl = environment.imgUrl;
@@ -15,14 +16,22 @@ const imgUrl = environment.imgUrl;
   styleUrl: './movie.component.css'
 })
 export class MovieComponent implements OnInit {
- 
-  /* Implement MovieService to query all popular movies */
-  private _movieService = inject(MovieService); 
 
+  /* Implement MovieService to query all popular movies */
+  private _movieService = inject(MovieService);
+  /* Implement ActivatedRoute to receive the movie type via url parameters. */
+  private _route = inject(ActivatedRoute);
+
+
+  movieType: string = 'popular';
   movies: IMovie[] = [];
 
   ngOnInit(): void {
-    this.loadAllMovies();
+    this._route.params.subscribe(params => {
+      this.movieType = params['movieType'] || 'popular';
+      console.log(this.movieType);
+      this.loadAllMovies();
+    });
   }
 
   loadAllMovies() {

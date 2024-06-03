@@ -1,6 +1,7 @@
 import { Component, Input, } from '@angular/core';
 import { IMovie } from '../../interfaces/movie';
 import { environment } from '../../../environments/environment.development';
+import { RouterLink } from '@angular/router';
 
 
 const imgUrl: string = environment.imgUrl;
@@ -8,7 +9,7 @@ const imgUrl: string = environment.imgUrl;
 @Component({
   selector: 'app-movie-card',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.css'
 })
